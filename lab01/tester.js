@@ -24,4 +24,3 @@ function analyze(sentence) {
 
 }
 
-console.log(analyze("Duk is gay"));
