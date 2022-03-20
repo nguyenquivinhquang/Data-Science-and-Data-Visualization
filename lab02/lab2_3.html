@@ -1,0 +1,47 @@
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="styles.css" />
+
+    <!-- <script type="text/javascript" src="../d3.js"></script> -->
+</head>
+<!-- <script src="https://d3js.org/d3.v7.min.js"></script> -->
+
+<body>
+    <h3>Nguyễn Quí Vinh Quang</h3>
+    <h4> ITITIU19252. </h4>
+    <h4> Data science and data visualization</h4>
+    <h4 id="normal"> <i> Lab 2 - Introduction to D3.jst</i> </h4>
+    <p1> This is all my own work. I did not copy the code from any other source</p1>
+</body>
+<!-- <div style="display: inline-block;
+ width: 20px;
+ height: 75px;
+ background-color: teal;"></div> -->
+<div style="height: 75px;"></div>
+
+<body>
+    <svg></svg>
+    <script src="https://d3js.org/d3.v4.min.js"></script>
+    <script src="visualize_q3.js"></script>
+    <script>
+
+        d3.csv("https://tungth.github.io/data/vis-lab2-data.csv",
+            function (error, data) {
+                if (error) {
+                    console.log("err");
+                }
+                else {
+                    var dataset = []
+                    for (i = 0; i < data.length; i++)
+                        dataset.push(Math.floor(0.4 * data[i]['Midterm'] + 0.4 * data[i]["Final"]))
+                    visualizeFunction(dataset);
+                }
+            });
+
+    </script>
+</body>
+
+
+</html>

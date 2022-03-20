@@ -1,0 +1,11 @@
+h3 {
+    color: blue;
+}
+#normal {
+    font-weight: normal;
+}
+#line_style {
+    stroke:blue;
+    stroke-width:10;
+    stroke-linecap:round;
+}
