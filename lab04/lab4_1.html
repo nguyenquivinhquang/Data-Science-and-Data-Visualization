@@ -1,0 +1,34 @@
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="style.css" />
+
+    <!-- <script type="text/javascript" src="../d3.js"></script> -->
+</head>
+
+<body>
+    <h3>Nguyễn Quí Vinh Quang</h3>
+    <h4> ITITIU19252. </h4>
+    <h4> Data science and data visualization</h4>
+    <h4 id="normal"> <i> Lab 4-D3.js - Transition, Update, Enter & Exit</i> </h4>
+    <p1> This is all my own work. I did not copy the code from any other source</p1>
+</body>
+
+<body>
+    <script src="https://d3js.org/d3.v4.min.js"></script>
+    <script src="./problem_solve.js"></script>
+    <button onclick="changeProvince(1)">Add Province</button>
+    <button onclick="changeProvince(-1)">Remove Province</button>
+
+    <label>Sort by:</label>
+
+    <select onchange="sortProvince(this)">
+        <option value="Default">Default</option>
+        <option value="area">Area</option>
+        <option value="population">Population</option>
+        <option value="density">Density</option>
+        <option value="GRDP-VND">GRDP-VND</option>
+        <option value="GRDP-USD">GRDP-USD</option>
+    </select>
+</body>
