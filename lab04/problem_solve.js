@@ -1,6 +1,6 @@
-var arg = null, 
-    sort = false, 
-    counter = 0;
+var arg = null,
+sort = false;
+counter = 20;
 
 var w = 500,
     h = 800;
