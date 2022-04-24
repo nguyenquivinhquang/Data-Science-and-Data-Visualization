@@ -11,9 +11,10 @@ function scatterPlot() {
     }
 
     d3.csv("https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_global.csv", rowConverter, function (data) {
-        console.log(data);
+        // console.log(data);
         let temp = 0, count = 0;
         let cleanData = []
+        
         for (let i = 0; i < data.length; i++) {
             if (isNaN(data[i].Latitude) || isNaN(data[i].Longtitude)) {
                 continue;
@@ -21,24 +22,16 @@ function scatterPlot() {
             if (isNaN(data[i].Province)) {
                 data[i].Province = "None";
             }
-            console.log(data[i].Province);
+            // console.log(data[i].Province);
             cleanData.push(data[i])
             if (data[i].Country == "China") count += 1
         }
         // console.log(data.sort((a, b) => a.case - b.case)[data.length - 1]);
+        preProcess(data);
         visualize(cleanData)
     });
 }
-// function preProcess(dataset) {
-//     map = {}
-//     var trace = new Set();
-//     for (let i = 0; i < dataset.length; i++) {
-//         if (isNaN(dataset[i].Latitude) || isNaN(dataset[i].Longtitude)) {
-//             continue;
-//         }
-//     }
 
-// }
 function visualize(dataset) {
     var scatterMargin = {
         top: 40,
@@ -46,11 +39,9 @@ function visualize(dataset) {
         bottom: 20,
         left: 50,
     }
-    var MaxCase = d3.deviation(dataset, function (d) { return d.case; });
+    var MaxCase = d3.max(dataset, function (d) { return d.case; });
     var scatterWidth = 1100 - scatterMargin.left - scatterMargin.right;
     var scatterHeight = 600 - scatterMargin.top - scatterMargin.bottom;
-
-
 
 
     var xScale = d3.scaleLinear()
@@ -78,7 +69,7 @@ function visualize(dataset) {
     //     console.log(colorScale(dataset[i].case))
     // }
     // console.log(colorScale(dataset[200].case));
-    
+
     var scatterSvg = d3
         .select("#visualize")
         .append("svg")
@@ -131,7 +122,7 @@ function visualize(dataset) {
         .attr("fill", "red")
         .attr("opacity", function (d) {
             // console.log(d.case);
-            return Math.round(colorScale(d.case)) + 1;
+            return Math.round(d.case/MaxCase * 5000);
         })
         .attr("cx", function (d) {
             return xScale(d.Longtitude);
@@ -163,7 +154,7 @@ function visualize(dataset) {
                 .attr("fill", "red")
                 .attr("opacity", function (d) {
                     // console.log(d.case);
-                    return Math.round(colorScale(d.case)) + 1;
+                    return Math.round(d.case/MaxCase * 5000);
                 });
 
             scatterSvg.selectAll(".dataInfo").remove();
