@@ -5,7 +5,8 @@ function scatterPlot() {
             Country: d['Country/Region'],
             Latitude: parseFloat(d['Lat']),
             Longtitude: parseFloat(d['Long']),
-            case: parseFloat(d['5/4/20'])
+            case: parseFloat(d['5/4/20']),
+            area: 0
         };
     }
 
@@ -28,6 +29,16 @@ function scatterPlot() {
         visualize(cleanData)
     });
 }
+// function preProcess(dataset) {
+//     map = {}
+//     var trace = new Set();
+//     for (let i = 0; i < dataset.length; i++) {
+//         if (isNaN(dataset[i].Latitude) || isNaN(dataset[i].Longtitude)) {
+//             continue;
+//         }
+//     }
+
+// }
 function visualize(dataset) {
     var scatterMargin = {
         top: 40,
@@ -62,7 +73,7 @@ function visualize(dataset) {
             d3.min(dataset, function (d) { return d.case; }),
             d3.max(dataset, function (d) { return d.case; }),
         ])
-        .range([0, 255]).nice();
+        .range([0, 100000]).nice();
     // for (let i = 0; i < dataset.length; i++) {
     //     console.log(colorScale(dataset[i].case))
     // }
@@ -117,9 +128,10 @@ function visualize(dataset) {
         .enter()
         .append("circle")
         .attr("class", "dot")
-        .attr("fill", function (d) {                          // Change color of bar based on its value
+        .attr("fill", "red")
+        .attr("opacity", function (d) {
             // console.log(d.case);
-            return "rgb(" + Math.round(colorScale(d.case) * 100000) + ",0, 0)" ;
+            return Math.round(colorScale(d.case)) + 1;
         })
         .attr("cx", function (d) {
             return xScale(d.Longtitude);
@@ -130,13 +142,13 @@ function visualize(dataset) {
         .attr("r", 5)
         .on("mouseover", function (d) {
             d3.select(this)
-                .attr("r", 8)
+                .attr("r", 10)
                 .attr("fill", "yellow");
 
             scatterSvg.append("text")
                 .attr("class", "dataInfo")
                 .text(function () {
-                    return "Province:" + d.Province  +  " Country: " + d.Country + ", " + "Cases: " + d.case;
+                    return "Country: " + d.Country + ", " + "Cases: " + d.case;
                 })
                 .attr("x", function () {
                     return xScale(d.Longtitude) - 15;
@@ -148,8 +160,10 @@ function visualize(dataset) {
         .on("mouseout", function (d) {
             d3.select(this)
                 .attr("r", 5)
-                .attr("fill", function (d) {                          
-                    return "rgb(" + Math.round(colorScale(d.case) * 100000) + ",0, 0)" ;
+                .attr("fill", "red")
+                .attr("opacity", function (d) {
+                    // console.log(d.case);
+                    return Math.round(colorScale(d.case)) + 1;
                 });
 
             scatterSvg.selectAll(".dataInfo").remove();
